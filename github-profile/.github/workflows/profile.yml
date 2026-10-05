@@ -1,0 +1,47 @@
+name: Update profile assets
+
+on:
+  schedule:
+    # Runs once a day at 05:30 UTC — repaints the heatmap with fresh data.
+    - cron: "30 5 * * *"
+  workflow_dispatch: {}
+  push:
+    branches: [main]
+    paths:
+      - profile.config.json
+      - portrait.txt
+      - generate.mjs
+      - generate-card.mjs
+      - .github/workflows/profile.yml
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Generate profile card (light + dark)
+        run: node generate-card.mjs
+
+      - name: Generate contribution jet heatmap
+        env:
+          GH_USERNAME: ${{ github.repository_owner }}
+          # Public contributions only — the built-in token is all we need.
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          OUTPUT_PATH: dist/github-jet.svg
+        run: node generate.mjs
+
+      - name: Commit and push if changed
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "chore: refresh profile assets"
+          file_pattern: "light.svg dark.svg dist/github-jet.svg"
