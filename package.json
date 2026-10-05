@@ -1,0 +1,15 @@
+{
+    "name": "jallamanikanth-profile",
+    "version": "1.0.0",
+    "private": true,
+    "description": "Generates the animated SVG assets used by the jallamanikanth GitHub profile README",
+    "type": "module",
+    "engines": {
+      "node": ">=18"
+    },
+    "scripts": {
+      "card": "node generate-card.mjs",
+      "heatmap": "node generate.mjs",
+      "build": "node generate-card.mjs && node generate.mjs"
+    }
+  }

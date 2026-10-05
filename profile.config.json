@@ -1,0 +1,44 @@
+{
+    "username": "jallamanikanth",
+    "host": "manikanth@devops",
+    "command": "./profile.sh --live",
+    "portrait": "portrait.txt",
+    "outputs": { "light": "light.svg", "dark": "dark.svg" },
+    "sections": [
+      {
+        "rows": [
+          ["Subject", "Manikanth Jalla"],
+          ["Role", "Senior DevOps Engineer"],
+          ["Origin", "Toronto, Canada"],
+          ["Focus", "Cloud Platform · SRE · GitOps"],
+          ["Cert", "Microsoft Certified Azure Administrator"],
+          ["Status", "Open to Senior DevOps / SRE roles"],
+          ["ToolChain", "VS Code, Git, Docker, kubectl, Helm"]
+        ]
+      },
+      {
+        "rows": [
+          ["Core.Cloud", "Azure (AKS · ACR · Key Vault), AWS"],
+          ["Core.IaC", "Terraform, Bicep, Ansible, Helm, Kustomize"],
+          ["Core.Containers", "Kubernetes, Docker, OpenShift, ArgoCD"],
+          ["Core.Observability", "Prometheus, Grafana, Alertmanager, Loki"],
+          ["Core.CICD", "Jenkins, GitLab CI, GitHub Actions, Azure DevOps"],
+          ["Core.Languages", "Python, Bash, HCL, YAML, SQL"]
+        ]
+      },
+      {
+        "heading": "Contact",
+        "rows": [
+          ["Mail", "jmanikanth23@gmail.com"],
+          ["LinkedIn", "manikanth-jalla-247b16288"],
+          ["GitHub", "jallamanikanth"]
+        ]
+      },
+      {
+        "heading": "Live Stats",
+        "rows": [
+          ["Heatmap", "auto-refreshed daily by GitHub Actions ↓"]
+        ]
+      }
+    ]
+  }
