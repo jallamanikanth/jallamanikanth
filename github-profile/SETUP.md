@@ -69,4 +69,4 @@ In `generate.mjs`:
 - `MAX_TARGETS` — how many of your busiest days get the bullet/blast effect
 - `LOOP_DUR` — seconds for one flight (there and back)
 - `FLASH_COLOR`, `BULLET_COLOR`, `BLAST_COLOR` — accent colours
-- `COLS` / `ROWS` — grid size (34×7 matches GitHub's own layout) 
+- `COLS` / `ROWS` — grid size (52×7 = one full year, like GitHub's own layout) 

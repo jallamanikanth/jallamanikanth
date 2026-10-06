@@ -27,16 +27,16 @@ const OUTPUT = process.env.OUTPUT_PATH || "dist/github-jet.svg";
 const SAMPLE = process.env.SAMPLE === "1";
 
 // ── layout (matches the reference design) ───────────────────────────────
-const COLS = 34; // weeks shown
+const COLS = 52; // weeks shown (a full year, like GitHub's own heatmap)
 const ROWS = 7;
 const CELL = 11;
 const STEP = 14; // cell + gap
 const GRID_X = 20;
 const GRID_Y = 15;
-const WIDTH = 513;
+const WIDTH = GRID_X * 2 + COLS * STEP - (STEP - CELL); // 765
 const HEIGHT = 170;
 const JET_X_START = 35;
-const JET_X_END = 478;
+const JET_X_END = GRID_X + (COLS - 1) * STEP - 4;
 const PAD_Y = 128; // where bullets launch from (just under the grid)
 
 // ── tuning ──────────────────────────────────────────────────────────────
@@ -45,8 +45,10 @@ const MAX_TARGETS = 12; // how many "busiest" days the jet fires on
 const FLASH_COLOR = "#39d353";
 const BULLET_COLOR = "#7ee787";
 const BLAST_COLOR = "#56d364";
-const EMPTY_COLOR = "#161b22";
-const LEVEL_COLORS = ["#161b22", "#0e4429", "#006d32", "#26a641", "#39d353"];
+// Level 0 is lighter than GitHub's #161b22 so the grid stays visible on the
+// dark canvas even when there are few contributions.
+const EMPTY_COLOR = "#21262d";
+const LEVEL_COLORS = [EMPTY_COLOR, "#0e4429", "#006d32", "#26a641", "#39d353"];
 
 const QUERY = `
   query($login: String!) {
@@ -280,8 +282,8 @@ function buildBulletsAndBlasts(targets) {
 function buildStars() {
   const pts = [
     [8, 20, 1.2], [8, 60, 1.6], [8, 100, 2.0],
-    [505, 25, 1.2], [505, 70, 1.6], [505, 110, 2.0],
-    [30, 164, 1.2], [483, 164, 1.6],
+    [WIDTH - 8, 25, 1.2], [WIDTH - 8, 70, 1.6], [WIDTH - 8, 110, 2.0],
+    [30, 164, 1.2], [WIDTH - 30, 164, 1.6],
   ];
   return pts
     .map(
