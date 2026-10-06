@@ -24,7 +24,6 @@ const portrait = read(cfg.portrait || "portrait.txt").replace(/\n+$/, "").split(
 
 // ── geometry ────────────────────────────────────────────────────────────
 const W = 1180;
-const H = 610;
 const DIV_X = 520; // vertical rule between the two panels
 const RIGHT = 1150;
 const MONO = "'JetBrains Mono','SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace";
@@ -32,6 +31,15 @@ const CYCLE = 14; // seconds — ambient gradient + scan cycle
 
 const A = { x: 34, top: 100, font: 8.6, lh: 10.3 };
 const I = { x: 548, head: 100, sep: 124, top: 150, lh: 21, font: 12, cw: 7.2, valueX: 772 };
+// Card height grows with the content (never shorter than the original 610).
+const H = (() => {
+  let y = I.top;
+  for (const s of cfg.sections) {
+    if (s.heading) y += I.lh;
+    y += s.rows.length * I.lh + 9;
+  }
+  return Math.max(610, Math.ceil(y + 30));
+})();
 const LEAD_IN = 0.5; // when the first row starts typing
 const STAGGER = 0.05;
 

@@ -8,12 +8,25 @@
       {
         "rows": [
           ["Subject", "Manikanth Jalla"],
-          ["Role", "Senior DevOps Engineer"],
-          ["Origin", "Toronto, Canada"],
+          ["Role", "Site Reliability Engineer @ Merative"],
+          ["Origin", "Scarborough, Ontario, Canada"],
+          ["Experience", "4+ yrs · DevOps → Sr DevOps → SRE"],
           ["Focus", "Cloud Platform · SRE · GitOps"],
-          ["Cert", "Microsoft Certified Azure Administrator"],
+          ["Cert", "Microsoft Certified: Azure Administrator"],
+          ["Cert.SRE", "Measuring and Managing Reliability"],
+          ["Education", "B.Sc. Computers · Osmania University"],
+          ["Domain", "Healthcare IT · HL7 · DICOM · PACS"],
+          ["Compliance", "HIPAA · SOC2"],
           ["Status", "Open to Senior DevOps / SRE roles"],
           ["ToolChain", "VS Code, Git, Docker, kubectl, Helm"]
+        ]
+      },
+      {
+        "heading": "Experience · Merative",
+        "rows": [
+          ["2025 – Now", "SRE · HA Azure/K8s via Terraform, on-call"],
+          ["2024 – 2025", "Sr DevOps · GitHub CI/CD, Terraform, deploy arch."],
+          ["2022 – 2024", "DevOps Engineer · Cloud, automation, CI/CD"]
         ]
       },
       {
@@ -21,7 +34,8 @@
           ["Core.Cloud", "Azure (AKS · ACR · Key Vault), AWS"],
           ["Core.IaC", "Terraform, Bicep, Ansible, Helm, Kustomize"],
           ["Core.Containers", "Kubernetes, Docker, OpenShift, ArgoCD"],
-          ["Core.Observability", "Prometheus, Grafana, Alertmanager, Loki"],
+          ["Core.Observability", "Prometheus, Grafana, ELK, New Relic, Loki"],
+          ["Core.Reliability", "SLO/SLI · Incident mgmt · On-call"],
           ["Core.CICD", "Jenkins, GitLab CI, GitHub Actions, Azure DevOps"],
           ["Core.Languages", "Python, Bash, HCL, YAML, SQL"]
         ]
