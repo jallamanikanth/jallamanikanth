@@ -57,7 +57,7 @@ const QUERY = `
             contributionDays {
               date
               contributionCount
-              color
+              contributionLevel
             }
           }
         }
@@ -75,7 +75,18 @@ async function fetchViaGraphql() {
   if (!res.ok) throw new Error(`GitHub GraphQL error ${res.status}: ${await res.text()}`);
   const json = await res.json();
   if (json.errors) throw new Error(JSON.stringify(json.errors));
-  return json.data.user.contributionsCollection.contributionCalendar.weeks;
+  if (!json.data || !json.data.user) throw new Error(`GitHub user "${USERNAME}" not found`);
+  const weeks = json.data.user.contributionsCollection.contributionCalendar.weeks;
+  // The API's own `color` field is the light-theme palette, which looks wrong on
+  // the dark canvas, so colour every day from its level using our dark palette.
+  const LEVELS = { NONE: 0, FIRST_QUARTILE: 1, SECOND_QUARTILE: 2, THIRD_QUARTILE: 3, FOURTH_QUARTILE: 4 };
+  return weeks.map((w) => ({
+    contributionDays: w.contributionDays.map((d) => ({
+      date: d.date,
+      contributionCount: d.contributionCount,
+      color: LEVEL_COLORS[LEVELS[d.contributionLevel] ?? 0],
+    })),
+  }));
 }
 
 /** Public contribution calendar — no token required. */
@@ -84,25 +95,47 @@ async function fetchViaHtml() {
     headers: { "User-Agent": "github-profile-jet-heatmap" },
   });
   if (!res.ok) throw new Error(`GitHub contributions page error ${res.status}`);
-  const html = await res.text();
+  return parseCalendarHtml(await res.text());
+}
 
-  const dayRe = /<td[^>]*data-date="(\d{4}-\d{2}-\d{2})"[^>]*data-level="(\d+)"[^>]*>([\s\S]*?)<\/td>/g;
+/**
+ * Parse GitHub's contributions fragment. Attribute order varies, and the
+ * count lives in a sibling <tool-tip for="<td id>"> rather than inside the <td>,
+ * so read attributes individually and join tooltips to cells by id.
+ */
+function parseCalendarHtml(html) {
+  const attr = (tag, name) => (tag.match(new RegExp(`\\s${name}="([^"]*)"`)) || [, null])[1];
+
+  const counts = new Map();
+  for (const m of html.matchAll(/<tool-tip\b([^>]*)>([\s\S]*?)<\/tool-tip>/g)) {
+    const id = attr(m[1], "for");
+    if (!id) continue;
+    const text = m[2].replace(/<[^>]+>/g, "").trim();
+    counts.set(id, /^no contributions/i.test(text) ? 0 : parseInt(text, 10) || 0);
+  }
+
   const days = [];
-  let m;
-  while ((m = dayRe.exec(html)) !== null) {
-    const tooltip = (m[3].match(/<tool-tip[^>]*>([\s\S]*?)<\/tool-tip>/) || [, ""])[1]
-      .replace(/<[^>]+>/g, "")
-      .trim();
-    const count = /^no contributions/i.test(tooltip) ? 0 : parseInt(tooltip, 10) || 0;
-    days.push({ date: m[1], contributionCount: count, color: LEVEL_COLORS[Math.min(4, Number(m[2]))] });
+  for (const m of html.matchAll(/<td\b([^>]*)>/g)) {
+    const date = attr(m[1], "data-date");
+    if (!date) continue;
+    const level = Math.min(4, Number(attr(m[1], "data-level")) || 0);
+    const count = counts.get(attr(m[1], "id")) ?? (level > 0 ? 1 : 0);
+    days.push({ date, contributionCount: count, color: LEVEL_COLORS[level] });
   }
   if (!days.length) throw new Error("Could not parse any contribution days from GitHub's calendar");
 
+  // Group into Sunday-first weeks by real weekday so rows line up with GitHub's
+  // grid even when the first/last week is partial.
   days.sort((a, b) => a.date.localeCompare(b.date));
   const weeks = [];
-  for (let i = 0; i < days.length; i += 7) {
-    const contributionDays = days.slice(i, i + 7);
-    if (contributionDays.length === ROWS) weeks.push({ contributionDays });
+  let current = null;
+  for (const day of days) {
+    const dow = new Date(`${day.date}T00:00:00Z`).getUTCDay();
+    if (!current || dow === 0) {
+      current = { contributionDays: Array.from({ length: ROWS }, () => ({ contributionCount: 0, color: EMPTY_COLOR, date: null })) };
+      weeks.push(current);
+    }
+    current.contributionDays[dow] = day;
   }
   return weeks;
 }
@@ -129,7 +162,13 @@ function sampleWeeks() {
 
 async function fetchWeeks() {
   if (SAMPLE) return sampleWeeks();
-  if (TOKEN) return fetchViaGraphql();
+  if (TOKEN) {
+    try {
+      return await fetchViaGraphql();
+    } catch (err) {
+      console.warn(`GraphQL failed (${err.message}); falling back to the public calendar`);
+    }
+  }
   return fetchViaHtml();
 }
 

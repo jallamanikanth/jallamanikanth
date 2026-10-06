@@ -6,12 +6,12 @@ on:
     - cron: "30 5 * * *"
   workflow_dispatch: {}
   push:
-    branches: [main]
+    branches: [master]
     paths:
-      - profile.config.json
-      - portrait.txt
-      - generate.mjs
-      - generate-card.mjs
+      - github-profile/profile.config.json
+      - github-profile/portrait.txt
+      - github-profile/generate.mjs
+      - github-profile/generate-card.mjs
       - .github/workflows/profile.yml
 
 permissions:
@@ -20,6 +20,9 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: github-profile
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -44,4 +47,4 @@ jobs:
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: "chore: refresh profile assets"
-          file_pattern: "light.svg dark.svg dist/github-jet.svg"
+          file_pattern: "github-profile/light.svg github-profile/dark.svg github-profile/dist/github-jet.svg"
