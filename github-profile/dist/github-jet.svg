@@ -241,16 +241,20 @@
 <rect x="468" y="85" width="11" height="11" rx="2" ry="2" fill="#161b22"/>
 <rect x="468" y="99" width="11" height="11" rx="2" ry="2" fill="#161b22"/>
 <rect x="482" y="15" width="11" height="11" rx="2" ry="2" fill="#161b22"/>
-<rect x="482" y="29" width="11" height="11" rx="2" ry="2" fill="#161b22"/>
-<rect x="482" y="43" width="11" height="11" rx="2" ry="2" fill="#161b22"/>
-<rect x="482" y="57" width="11" height="11" rx="2" ry="2" fill="#161b22"/>
-<rect x="482" y="71" width="11" height="11" rx="2" ry="2" fill="#161b22"/>
-<rect x="482" y="85" width="11" height="11" rx="2" ry="2" fill="#161b22"/>
-<rect x="482" y="99" width="11" height="11" rx="2" ry="2" fill="#161b22"/>
+<rect x="482" y="29" width="11" height="11" rx="2" ry="2" fill="#006d32"><animate attributeName="fill" dur="20s" repeatCount="indefinite" keyTimes="0;0.48;0.486;0.52;0.526;1" values="#006d32;#006d32;#39d353;#006d32;#39d353;#006d32"/></rect>
+<rect x="482" y="43" width="11" height="11" rx="2" ry="2" fill="#39d353"><animate attributeName="fill" dur="20s" repeatCount="indefinite" keyTimes="0;0.48;0.486;0.52;0.526;1" values="#39d353;#39d353;#39d353;#39d353;#39d353;#39d353"/></rect>
 </g>
 <g id="bullets">
+<circle cx="487.5" cy="128" r="2.4" fill="#7ee787"><animate attributeName="cy" dur="20s" repeatCount="indefinite" keyTimes="0;0.462;0.48;1" values="128;128;34.5;34.5"/><animate attributeName="opacity" dur="20s" repeatCount="indefinite" keyTimes="0;0.462;0.48;0.486;1" values="0;1;1;0;0"/></circle>
+<circle cx="487.5" cy="128" r="2.4" fill="#7ee787"><animate attributeName="cy" dur="20s" repeatCount="indefinite" keyTimes="0;0.462;0.48;1" values="128;128;48.5;48.5"/><animate attributeName="opacity" dur="20s" repeatCount="indefinite" keyTimes="0;0.462;0.48;0.486;1" values="0;1;1;0;0"/></circle>
+<circle cx="487.5" cy="128" r="2.4" fill="#7ee787"><animate attributeName="cy" dur="20s" repeatCount="indefinite" keyTimes="0;0.502;0.52;1" values="128;128;48.5;48.5"/><animate attributeName="opacity" dur="20s" repeatCount="indefinite" keyTimes="0;0.502;0.52;0.526;1" values="0;1;1;0;0"/></circle>
+<circle cx="487.5" cy="128" r="2.4" fill="#7ee787"><animate attributeName="cy" dur="20s" repeatCount="indefinite" keyTimes="0;0.502;0.52;1" values="128;128;34.5;34.5"/><animate attributeName="opacity" dur="20s" repeatCount="indefinite" keyTimes="0;0.502;0.52;0.526;1" values="0;1;1;0;0"/></circle>
 </g>
 <g id="blasts">
+<circle cx="487.5" cy="34.5" r="0" fill="none" stroke="#56d364" stroke-width="1.6" opacity="0"><animate attributeName="r" dur="20s" repeatCount="indefinite" keyTimes="0;0.48;0.498;1" values="0;1;9;9"/><animate attributeName="opacity" dur="20s" repeatCount="indefinite" keyTimes="0;0.48;0.498;1" values="0;1;1;0"/></circle>
+<circle cx="487.5" cy="48.5" r="0" fill="none" stroke="#56d364" stroke-width="1.6" opacity="0"><animate attributeName="r" dur="20s" repeatCount="indefinite" keyTimes="0;0.48;0.498;1" values="0;1;9;9"/><animate attributeName="opacity" dur="20s" repeatCount="indefinite" keyTimes="0;0.48;0.498;1" values="0;1;1;0"/></circle>
+<circle cx="487.5" cy="48.5" r="0" fill="none" stroke="#56d364" stroke-width="1.6" opacity="0"><animate attributeName="r" dur="20s" repeatCount="indefinite" keyTimes="0;0.52;0.538;1" values="0;1;9;9"/><animate attributeName="opacity" dur="20s" repeatCount="indefinite" keyTimes="0;0.52;0.538;1" values="0;1;1;0"/></circle>
+<circle cx="487.5" cy="34.5" r="0" fill="none" stroke="#56d364" stroke-width="1.6" opacity="0"><animate attributeName="r" dur="20s" repeatCount="indefinite" keyTimes="0;0.52;0.538;1" values="0;1;9;9"/><animate attributeName="opacity" dur="20s" repeatCount="indefinite" keyTimes="0;0.52;0.538;1" values="0;1;1;0"/></circle>
 </g>
 <g id="jet">
   <g transform="translate(0,0)">
@@ -267,3 +271,4 @@
     keyTimes="0;0.5;1"
     values="35.00,140.00;478.00,140.00;35.00,140.00"/>
 </g>
+</svg>
